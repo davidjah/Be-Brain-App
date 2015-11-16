@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <title>Be|Brain</title>
+<link href="jquery-mobile/jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css"/>
+<script src="jquery-mobile/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="jquery-mobile/jquery.mobile-1.0.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="plugins/org.apache.cordova.inappbrowser/www/inappbrowser.js"></script>
+        
+		<script>
+				
+        	$(document).ready(function() {
+				
+				$('#premenu').click(function(){
+					$('#premenu').hide();
+					$('#multimedia').hide();
+					$('#recursos').hide();
+					$('#neurociencia').hide();
+					$('#enfermedades').hide();					
+					$('#anatomia').hide();
+					$('#capaMenu').toggle(100);
+				});
+				$('#fb').click(function(){
+						
+					});
+				$('#twitter').click(function(){
+					window.open(																										'https://twitter.com/intent/follow?original_referer=http%3A%2F%2Fstatic.parastorage.com%2Fservices%2Fsanta%2F1.689.11%2Fstatic%2Fexternal%2Ftwfollow.html%3Falign%3Dleft%26href%3Dhttps%253A%252F%252Ftwitter.com%252FbebrainNeuro%26lang%3Den%26screen_name%3DbebrainNeuro%26show_count%3Dfalse%26show_screen_name%3Dtrue&screen_name=bebrainNeuro&tw_p=followbutton', '_blank', 'location=yes');
+					});
+				
+				$('#botonI').click(function(){
+					$('#premenu').show();
+					$('#capaMenu').hide();
+					navigator.app.loadUrl('http://www.be-brain.org/', {openExternal : true});
+					//window.open('http://www.be-brain.org/', '_blank', 'location=yes');
+				});
+				$('#botonM').click(function(){
+					$('#premenu').show();
+					$('#capaMenu').hide();
+					$('#multimedia').toggle(100);
+				});
+				$('#botonR').click(function(){
+					$('#premenu').show();
+					$('#capaMenu').hide();
+					$('#recursos').toggle(100);
+				});
+				$('#botonNo').click(function(){
+					$('#premenu').show();
+					$('#capaMenu').hide();
+					window.open('http://www.be-brain.org/#!articulos/c6hq', '_blank', 'location=yes');
+				});
+				$('#botonA').click(function(){
+					$('#premenu').show();
+					$('#capaMenu').hide();					
+					$('#anatomia').toggle(100);
+				});
+				$('#botonE').click(function(){
+					$('#premenu').show();
+					$('#capaMenu').hide();
+					$('#enfermedades').toggle(100);
+				});
+				$('#botonNe').click(function(){
+					$('#premenu').show();
+					$('#capaMenu').hide();
+					$('#neurociencia').toggle(100);
+				});
+				$('#botonC').click(function(){
+					$('#premenu').show();
+					$('#capaMenu').hide();								
+				});
+            });
+			
+			
+        </script>
+    </head>
+    <body>
+    
+   		<div id="titulo"><img src="img/logo.jpg"/></div>
+        
+        <div data-role="button" id="premenu"><img src="img/menu.png" id="botonMenu"/></div>
+    
+    <div data-role="fieldcontain" align="center" id="capaMenu">
+    		<table id="tablaMenu">
+        	<tr>
+            	<td><a href="http://www.be-brain.org/" rel="external" target="_blank"><img src="img/inicio_sombra.png" id="botonI" width="100%" height="100%"  class="seccion2" data-role="button"/></a></td>
+            	<td><img src="img/anatomia_sombra.png" id="botonA"   class="seccion2" data-role="button"/></td>
+            	<td><img src="img/contacto_sombra.png" id="botonC"   class="seccion2" data-role="button"/></td>
+            </tr>
+        	<tr>
+            	<td><img src="img/enfermedades_sombra.png" id="botonE"   class="seccion2" data-role="button"/></td>
+            	<td><img src="img/multimedia_sombra.png" id="botonM"   class="seccion2" data-role="button"/></td> 
+                <td><img src="img/neurociencia_sombra.png" id="botonN"   class="seccion2" data-role="button"/></td>
+                           	            
+            </tr>
+            <tr>
+            	<td><img src="img/noticias_sombra.png" id="botonNo"   class="seccion2" data-role="button"/></td>
+            	<td><img src="img/recursos_sombra.png" id="botonR"   class="seccion2" data-role="button"/></td>
+            	<td><a href="indexJuego.html" target="_parent"><img src="img/quizz_sombra.png" id="botonQ"   class="seccion2" data-role="button"/><a></td>            
+            </tr>
+        </table>
+            
+        
+    </div>
+    
+    <div data-role="content" id="multimedia" align="center">
+    	<div data-role="listview" id="cab">¿QUÉ QUIERES VER?</div>
+    	<div data-role="listview" id="list">CONFERENCIAS</div>
+        <div data-role="listview" id="list">ATLAS CEREBRAL INTERACTIVO</div>
+        <div data-role="listview" id="list">DOCUMENTALES</div>
+        <div data-role="listview" id="list">ENTREVISTAS</div>
+        <div data-role="listview" id="list">GALERIA</div>
+    </div>
+    
+    <div data-role="content" id="recursos" align="center">
+    	<div data-role="listview" id="cab">¿A QUÉ RECURSO QUIERES ACCEDER?</div>
+    	<div data-role="listview" id="list">LIBROS</div>
+        <div data-role="listview" id="list">MANUALES</div>
+        <div data-role="listview" id="list">CENTROS DE INVESTIGACIÓN</div>
+        <div data-role="listview" id="list">REVISTAS</div>
+        <div data-role="listview" id="list">INSTITUCIONES</div>
+        <div data-role="listview" id="list">PÁGINAS DE INTERES</div>   	
+    </div>
+    
+     <div data-role="content" id="enfermedades" align="center">
+    	<div data-role="listview" id="cab">¿A QUÉ ENFERMEDAD QUIERES ACCEDER?</div>
+    	<div data-role="listview" id="list">ALZHEIMER</div>
+        <div data-role="listview" id="list">PARKINSON</div>
+        <div data-role="listview" id="list">AUTISMO</div>
+        <div data-role="listview" id="list">ESQUIZOFRENIA</div>  	
+    </div>
+    
+     <div data-role="content" id="neurociencia" align="center">
+    	<div data-role="listview" id="cab">¿QUÉ QUIERES CONSULTAR?</div>
+    	<div data-role="listview" id="list">RAMAS DE LA NEUROCIENCIA</div>
+        <div data-role="listview" id="list">OBJETIVOS</div>
+        <div data-role="listview" id="list">TÉCNICAS</div>
+        <div data-role="listview" id="list">CONCEPTOS NEUROCIENTÍFICOS</div>  	
+    </div>
+    
+    <div data-role="content" id="anatomia" align="center">
+    	<table>
+        	<tr>
+            	<td><img class="seccion" src="img/sistNervios.00_png_srz" id="botonI"/></td>
+            	<td><img class="seccion" src="img/periferico.00_jpg_srz" id="botonNe"/></td>
+            	<td><img class="seccion" src="img/celulas.00_jpg_srz" id="botonE"/></td>
+            </tr>
+        	<tr>
+            	<td>sistema nervioso central</td>
+            	<td>sistema nervioso periferico</td>
+            	<td>celulas nerviosas</td>            
+            </tr>
+        </table>		
+    		
+    </div>
+    
+    <div id="abajo" align="center">
+    	<img class="botonRS" src="img/facebook.png" id="fb"/>
+        <img class="botonRS" src="img/Twitter.png" id="twitter"/>
+        <img class="botonRS" src="img/revista.png" id="revista"/>
+    </div>
+    
+    
+    
+    </body>
+</html>
