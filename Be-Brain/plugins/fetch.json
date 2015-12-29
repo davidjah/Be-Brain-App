@@ -14,5 +14,14 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "org.apache.cordova.home": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ZhichengChen/cordova-plugin-android-home.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

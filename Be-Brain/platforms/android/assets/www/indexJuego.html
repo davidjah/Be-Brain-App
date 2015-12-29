@@ -1,188 +1,464 @@
 <!DOCTYPE html> 
 <html>
-<head>
-<meta charset="utf-8">
-<title>Aplic. Web de jQuery Mobile</title>
-<link href="jquery-mobile/jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css"/>
-<script src="jquery-mobile/jquery-1.6.4.min.js" type="text/javascript"></script>
-<script src="jquery-mobile/jquery.mobile-1.0.min.js" type="text/javascript"></script>
-
-</head> 
-<body>
-<script>
-	var imagenes=new Array('img/0.png','img/0-g.png','img/1.png','img/1-g.png','img/2.png','img/2-g.png','img/3.png','img/3-g.png');//array con la imagenes de todos los cerebros.
-	var index;
-	var i;
-	var c=0;
-	var preguntas=new Array('pregunta 1','pregunta 2','pregunta 3','pregunta 4','pregunta 5');//array de preguntas
-	var soluciones=new Array();//array con las soluciones a cada pregunta
-	var opciones=new Array();//array de opciones de respuesta	
-	
-	soluciones['pregunta 1']='a';
-	soluciones['pregunta 2']='b';
-	soluciones['pregunta 3']='c';
-	soluciones['pregunta 4']='d';
-	soluciones['pregunta 5']='e';
-	
-	opciones['pregunta 1']="a,b,c";
-	opciones['pregunta 2']="b,c,d";
-	opciones['pregunta 3']="c,d,e";
-	opciones['pregunta 4']="d,e,f";
-	opciones['pregunta 5']="e,f,g";	
-	
-	window.onload=function(){		
-		refreshPage();
-		rotarImagenes(); 
-		setInterval(rotarImagenes,1000);
-		setInterval(function(){$('#contImg').animate({marginLeft:"+=30px"},100).animate({marginLeft:"-=30px"},100)},10);																	
-		}
-		
-	/*bloqueo atras*/
-	document.addEventListener("deviceready", onDeviceReady, false); 
-	function onDeviceReady() { 
-		document.addEventListener("backbutton", onBackKeyDown, false); 
-		
-		} 
-		
-	function onBackKeyDown() { 
-		alert('Back button clicked!'); 
-	}
-	/*bloqueo atras*/
-		
-    function rotarImagenes(){
-        index=Math.floor((Math.random()*imagenes.length)); 
-        document.getElementById("imagen").src=imagenes[index];		
-    }
-	
-	function refreshPage(){		
-		jQuery.mobile.changePage(window.location.href, {
-			allowSamePageTransition: true,
-			transition: 'none',
-			reloadPage: true
-		});		
-	}
-		
-	function parar(){//para la rotacion de imagenes, crea las pantallas de juego y asigna los temas
-		$(document.body).append('<div data-role="page" id="quiz"></div>');
-		$(document.body).append('<div data-role="page" id="resul"></div>');
-		
-		var dCont=document.getElementById("contImg");
-		var dImg=document.getElementById("imagen");
-		
-		dCont.removeChild(dImg);
-		
-		$('#contImg').append('<img id="imagen2"/>');
-		$('#imagen2').attr("src", ""+imagenes[index]);
-		$('#imgCere').attr("src", ""+imagenes[index]);
-		setInterval(function(){$('#cerebroTema').animate({marginTop:"+=30px" },300).animate({marginTop:"-=30px"},500)},10);
-		
-		if(index==0 || index==1){
-			document.getElementById("tituloTema").innerHTML="AZUL";
-		}else if(index==2 || index==3){
-			document.getElementById("tituloTema").innerHTML="AMARILLO";
-		}else if(index==4 || index==5){
-			document.getElementById("tituloTema").innerHTML="VERDE";
-		}else if(index==6 || index==7){
-			document.getElementById("tituloTema").innerHTML="ROJO";
-		}
+    <head>
+    
+        <meta charset="utf-8">
+        <title>Aplic. Web de jQuery Mobile</title>
+        <link href="jquery-mobile/jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css"/><!--cargamos el css -->
+        <script src="jquery-mobile/jquery-1.6.4.min.js" type="text/javascript"></script><!-- cargamos las funciones jquery -->
+        <script src="jquery-mobile/jquery.mobile-1.0.min.js" type="text/javascript"></script><!-- cargamos las funciones jquery mobile -->
+        <script src="cordova.js"></script><!-- este script permite que el documento html funcione como app movil -->
+    
+    </head> 
+    <body>
+        
+        <script>
+            var imagenes=new Array('img/0.png','img/0-g.png','img/1.png','img/1-g.png','img/2.png','img/2-g.png','img/3.png','img/3-g.png');//array con la imagenes de todos los cerebros.
+            var index;
+            var i;
+            var c=0;
+            var preguntas;//esta variable sera el array de preguntas que se cargara uno dependiendo de la categoria que toque
+            var soluciones;//esta variable sera el array de soluciones que se cargara uno dependiendo de la categoria que toque
+            var opciones;//esta variable sera el array de opciones que se cargara uno dependiendo de la categoria que toque
+			            
+            /*$(document).ready(function(e) {//en esta funcion comprobamos que el dispositivo ha cargado el script cordova.js
+                document.addEventListener("deviceready", onDeviceReady, false); 
+                        function onDeviceReady() { 
+                            document.addEventListener("backbutton", onBackKeyDown, false); 
+                        } 
+                        function onBackKeyDown() { 
+                            if(confirm("¿Desea salir de la aplicación?")){
+                                navigator.app.exitApp();
+                            }
+                        }
+            });*/
+            
+            window.onload=function(){		
+                
+				refreshPage();
+                setInterval(rotarImagenes,100);
+                setInterval(function(){$('#contImg').animate({marginLeft:"+=30px"},100).animate({marginLeft:"-=30px"},100)},10);
+                                                                                
+                }       
+                
+            function rotarImagenes(){
+                index=Math.floor((Math.random()*imagenes.length)); 
+                document.getElementById("imagen").src=imagenes[index];		
+            }
+            
+            function refreshPage(){		
+                jQuery.mobile.changePage(window.location.href, {
+                    allowSamePageTransition: true,
+                    transition: 'none',
+                    reloadPage: true
+                });		
+            }
+                
+            function parar(){//para la rotacion de imagenes, crea las pantallas de juego y asigna los temas
+                $(document.body).append('<div data-role="page" id="quiz"></div>');
+                $(document.body).append('<div data-role="page" id="resul"></div>');
+                
+                var dCont=document.getElementById("contImg");
+                var dImg=document.getElementById("imagen");
+                
+                dCont.removeChild(dImg);
+                
+                $('#contImg').append('<img id="imagen2"/>');
+                $('#imagen2').attr("src", ""+imagenes[index]);
+                $('#imgCere').attr("src", ""+imagenes[index]);
+                setInterval(function(){$('#cerebroTema').animate({marginTop:"+=30px" },300).animate({marginTop:"-=30px"},500)},10);
+                
+                if(index==0 || index==1){
+                    document.getElementById("tituloTema").innerHTML="BIOLOGÍA CELULAR";
+                    
+                    preguntas=new Array('¿Qué determina la forma de la neurona?','¿Cuál de estas estructuras no forma parte del citoesqueleto?','Número aproximado de neuronas en el cerebro humano','¿Cuál es la zona de input de las neuronas?','¿Cuál es la zona de conducción de las neuronas?','¿Cuál es la zona de output de las neuronas?','¿Cómo se llaman las hendiduras donde la membrana del axón esta desnuda (sin mielina)?','¿Cuál de estos no es una célula gliar?','¿Cómo se llama a la comunicación entre neuronas?','¿Cómo se llaman las señales eléctricas que trasmiten los axones?','¿Qué tipo de células recubre los axones de las neuronas de mielina?','¿Dónde se encuentran las células de purkinje?','¿Qué tipo de ion no participa en el potencial de acción?','¿Cuál es el centro metabólico de la neurona?','¿Cuál es la distancia que puede llegar a tener la transmisión sináptica de un axón?','¿Cuánto dura el potencial de acción?','¿Cuántas sinapsis puede llegar a tener un único axón?','¿Cuál es la utilidad del aparato de Golgi?','Las neuronas piramidales, son también llamadas…','Los neurotransmisores inhibidores…','La serotonina es un neurotransmisor…','¿Cuál de estas neuronas no están mielinizadas?','¿Cómo se denomina el proceso por el cual una célula dirige el contenido de vesículas intracelulares (secretoras) al espacio extracelular?','¿Cómo se denomina el proceso por el cual una célula adquiere el contenido de vesículas intracelulares desde el espacio extracelular?','¿Qué es la sinaptogénesis?','¿Cómo se llaman las células precursoras neuronales que se originan en el ectodermo neural?','¿Cómo se denomina el movimiento de las células cuando se guían a través de la superficie de otras neuronas?','¿Cuál de estos no es un tipo histogenético?','Los fagocitos intraneurales son tambien llamados…','¿Como se denomina al engrosamiento del axón en el extremos de este, donde secreta neurotransmisores?','¿Cuál es la microestructura que fabrica ribosomas para sintetizar proteínas?');
+                    
+                    soluciones=new Array();
+                    opciones=new Array();
+                    
+                    soluciones['¿Qué determina la forma de la neurona?']='citoesqueleto';
+                    soluciones['¿Cuál de estas estructuras no forma parte del citoesqueleto?']='orgánulos';
+                    soluciones['Número aproximado de neuronas en el cerebro humano']='100.000 millones';
+                    soluciones['¿Cuál es la zona de input de las neuronas?']='Dendritas y a veces cuerpo celular';
+                    soluciones['¿Cuál es la zona de conducción de las neuronas?']='Axón y a veces dendritas';
+                    soluciones['¿Cuál es la zona de output de las neuronas?']='Terminales del axón';
+                    soluciones['¿Cómo se llaman las hendiduras donde la membrana del axón esta desnuda (sin mielina)?']='nódulos de Ranvier';
+                    soluciones['¿Cuál de estos no es una célula gliar?']='glionema';
+                    soluciones['¿Cómo se llama a la comunicación entre neuronas?']='sinapsis';
+                    soluciones['¿Cómo se llaman las señales eléctricas que trasmiten los axones?']='potencial de acción';
+                    soluciones['¿Qué tipo de células recubre los axones de las neuronas de mielina?']='oligodendrocitos';
+                    soluciones['¿Dónde se encuentran las células de purkinje?']='Cerebelo';
+                    soluciones['¿Qué tipo de ion no participa en el potencial de acción?']='Fósforo';
+                    soluciones['¿Cuál es el centro metabólico de la neurona?']='soma';
+                    soluciones['¿Cuál es la distancia que puede llegar a tener la transmisión sináptica de un axón?']='3m';
+                    soluciones['¿Cuánto dura el potencial de acción?']='1ms';
+                    soluciones['¿Cuántas sinapsis puede llegar a tener un único axón?']='1000';
+                    soluciones['¿Cuál es la utilidad del aparato de Golgi?']='Síntesis de macromoléculas';
+                    soluciones['Las neuronas piramidales, son también llamadas…']='Neuronas de golgi tipo I';
+                    soluciones['Los neurotransmisores inhibidores…']='Polarizan';
+                    soluciones['La serotonina es un neurotransmisor…']='excitador';
+                    soluciones['¿Cuál de estas neuronas no están mielinizadas?']='fotorreceptoras';
+                    soluciones['¿Cómo se denomina el proceso por el cual una célula dirige el contenido de vesículas intracelulares (secretoras) al espacio extracelular?']='exocitosis';
+                    soluciones['¿Cómo se denomina el proceso por el cual una célula adquiere el contenido de vesículas intracelulares desde el espacio extracelular?']='endocitosis';
+                    soluciones['¿Qué es la sinaptogénesis?']='La creación de sinapsis';
+                    soluciones['¿Cómo se llaman las células precursoras neuronales que se originan en el ectodermo neural?']='neuroblastos';
+                    soluciones['¿Cómo se denomina el movimiento de las células cuando se guían a través de la superficie de otras neuronas?']='movimiento neurofílico';
+                    soluciones['¿Cuál de estos no es un tipo histogenético?']='Formación ventral';
+                    soluciones['Los fagocitos intraneurales son tambien llamados…']='Microglía';
+                    soluciones['¿Como se denomina al engrosamiento del axón en el extremos de este, donde secreta neurotransmisores?']='botones axónicos';
+                    soluciones['¿Cuál es la microestructura que fabrica ribosomas para sintetizar proteínas?']='Nucléolo';
+                    
+                    opciones['¿Qué determina la forma de la neurona?']='citoesqueleto,citoplasma,endoplasma';
+                    opciones['¿Cuál de estas estructuras no forma parte del citoesqueleto?']='microtúbulos,orgánulos,neurofilamentos';
+                    opciones['Número aproximado de neuronas en el cerebro humano']='25.000 millones,1 trillón,100.000 millones';
+                    opciones['¿Cuál es la zona de input de las neuronas?']='Axón y a veces dendritas,Terminales del axón,Dendritas y a veces cuerpo celular';
+                    opciones['¿Cuál es la zona de conducción de las neuronas?']='Axón y a veces dendritas,Terminales del axón,Dendritas y a veces cuerpo celular';
+                    opciones['¿Cuál es la zona de output de las neuronas?']='Axón y a veces dendritas,Terminales del axón,Dendritas y a veces cuerpo celular';
+                    opciones['¿Cómo se llaman las hendiduras donde la membrana del axón esta desnuda (sin mielina)?']='nódulos de Ranvier,espacio axónico,egión de Schawnn';
+                    opciones['¿Cuál de estos no es una célula gliar?']='oligodendrocito,astrocito,glionema';
+                    opciones['¿Cómo se llama a la comunicación entre neuronas?']='sinapsis,neuroenosis,axoenosis';
+                    opciones['¿Cómo se llaman las señales eléctricas que trasmiten los axones?']='sinapsis,potencial de acción,polarización dinámica';
+                    opciones['¿Qué tipo de células recubre los axones de las neuronas de mielina?']='oligodendrocitos,microglia,astrocitos';			
+                    opciones['¿Dónde se encuentran las células de purkinje?']='Hipotálamo,Cerebelo,Ganglios basales';
+                    opciones['¿Qué tipo de ion no participa en el potencial de acción?']='Potasio,Magnesio,Fósforo';
+                    opciones['¿Cuál es el centro metabólico de la neurona?']='soma,axón,dendrita';
+                    opciones['¿Cuál es la distancia que puede llegar a tener la transmisión sináptica de un axón?']='0.3mm,30cm,3m';
+                    opciones['¿Cuánto dura el potencial de acción?']='0.1s,1s,1ms';
+                    opciones['¿Cuántas sinapsis puede llegar a tener un único axón?']='100,1000,25000';
+                    opciones['¿Cuál es la utilidad del aparato de Golgi?']='Asimilación de endorfinas,Síntesis de macromoléculas,Acumulación de nutrientes';
+                    opciones['Las neuronas piramidales, son también llamadas…']='Neuronas unipolares,Neuronas de golgi tipo I,Neuronas de Golgi tipo II ';
+                    opciones['Los neurotransmisores inhibidores…']='Polarizan,Despolarizan,Excitan';
+                    opciones['La serotonina es un neurotransmisor…']='inhibidor,excitador,colinérgico';
+                    opciones['¿Cuál de estas neuronas no están mielinizadas?']='fotorreceptoras,isodendríticas,vegetativas';
+                    opciones['¿Cómo se denomina el proceso por el cual una célula dirige el contenido de vesículas intracelulares (secretoras) al espacio extracelular?']='sinapsis,exocitosis,pinocitosis';
+                    opciones['¿Cómo se denomina el proceso por el cual una célula adquiere el contenido de vesículas intracelulares desde el espacio extracelular?']='endocitosis,exocitosis,sinapsis';
+                    opciones['¿Qué es la sinaptogénesis?']='La muerte neuronal,La creación de sinapsis,Pérdida de sinapsis';
+                    opciones['¿Cómo se llaman las células precursoras neuronales que se originan en el ectodermo neural?']='neuroblastos,células progenitoras,células primitivas';
+                    opciones['¿Cómo se denomina el movimiento de las células cuando se guían a través de la superficie de otras neuronas?']='movimiento gliofílico,movimiento neurofílico,movimiento en túnel subventricular';
+                    opciones['¿Cuál de estos no es un tipo histogenético?']='Formación reticular,Formación nuclear,Formación ventral';
+                    opciones['Los fagocitos intraneurales son tambien llamados…']='Astrocitos,Neuronas recolectoras,Microglía';
+                    opciones['¿Como se denomina al engrosamiento del axón en el extremos de este, donde secreta neurotransmisores?']='región sináptica,botones axónicos,terminales axónicos';
+                    opciones['¿Cuál es la microestructura que fabrica ribosomas para sintetizar proteínas?']='Nucléolo,Cromosoma,Aparato de Golgi';
+                    
+                }else if(index==2 || index==3){
+                    document.getElementById("tituloTema").innerHTML="NEUROBIOLOGÍA";
+                    
+                    preguntas=new Array('¿Qué estructura del cerebelo está encargada de la coordinación muscular?','La amígdala se encarga, principalmente de…','La enfermedad asociada a la formación de placas de proteínas tau y beta-amiloide es…','La enfermedad asociada a la degeneración de las neuronas dopaminérgicas de la sustancia negra y los gangios basales es…','¿Cuál es la principal función del tálamo?','¿Cómo se denomina a la estructura que sirve de vía comunicante entre hemisferios?','¿Para qué sirve el área de wernicke?','¿Qué tipo de funciones tiene el subtálamo?','¿Cómo se llama la representación pictórica de las divisiones anatómicas de la corteza motora primaria y la corteza somatoestésica primaria?','¿Qué sistema es el encargado de regular las actividades involuntarias del cuerpo?','¿Cómo se llama a la acción que realiza el sistema nervioso autónomo  y tiene la función de regular las reacciones conscientes?','¿Qué sistema se encarga de regular las actividades del organismo cuando se encuentra en condiciones de estrés y actividad física?','¿Cuáles de estos no es un tipo de fotorreceptores?','¿Dónde se encuentran las células mitrales?','¿Cuál es la región siguiente a la a la médula espinal?','¿Cuál de estos pares craneales lleva información de gusto y sensibilidad general?','¿Cuántos ventrículos cerebrales existen?','¿Qué forma tiene la sustancia gris de la médula espinal?','¿Cómo se llaman los reflejos que aparecen sin mediación del cerebro?','¿Qué lóbulo es el responsable de los procesos de planificación, control y ejecución de las funciones motoras?','La estructura más importante para el aprendizaje y la memoria es…','¿Cuál no es una meninge?','¿Entre que dos meninges se encuentra el espacio leptomeníngeo?','Están situados en las raíces posteriores de los nervios raquídeos, contienen los cuerpos de las neuronas sensitivas.','¿Qué patología genética se relaciona con la presencia de una copia extra del cromosoma 21?','¿Qué tipo de células son las encargadas de transformar el sonido en impulso nervioso?','¿Qué estructura controla la actividad cardiaca, la respiración, la actividad vasomotora y gastrointestinal?','¿Qué estructura coordina e integra las respuestas que se producen mediante cambios motivacionales y produce expresión facial y corporal?','Los coliculos superiores tienen una función visual, son los encargados de orientar la cabeza y los ojos hacia los estímulos, mientras que los colículos inferiores están relacionas con…','¿La alteración de que estructura  puede tener como consecuencia temblores?');
+                    
+                    soluciones=new Array();
+                    opciones=new Array();
+                    
+                    soluciones['¿Qué estructura del cerebelo está encargada de la coordinación muscular?']='neocerebelo';
+                    soluciones['La amígdala se encarga, principalmente de…']='Dar significado emocional a los estímulos';
+                    soluciones['La enfermedad asociada a la formación de placas de proteínas tau y beta-amiloide es…']='Alzheimer';
+                    soluciones['La enfermedad asociada a la degeneración de las neuronas dopaminérgicas de la sustancia negra y los gangios basales es…']='Parkinson';
+                    soluciones['¿Cuál es la principal función del tálamo?']='Relevo de la información sensorial y motora';
+                    soluciones['¿Cómo se denomina a la estructura que sirve de vía comunicante entre hemisferios?']='cuerpo calloso';
+                    soluciones['¿Para qué sirve el área de wernicke?']='Comprensión del lenguaje';
+                    soluciones['¿Qué tipo de funciones tiene el subtálamo?']='motoras';
+                    soluciones['¿Cómo se llama la representación pictórica de las divisiones anatómicas de la corteza motora primaria y la corteza somatoestésica primaria?']='Homúnculo';
+                    soluciones['¿Qué sistema es el encargado de regular las actividades involuntarias del cuerpo?']='Sistema nervioso autónomo';
+                    soluciones['¿Cómo se llama a la acción que realiza el sistema nervioso autónomo  y tiene la función de regular las reacciones conscientes?']='arco reflejo';
+                    soluciones['¿Qué sistema se encarga de regular las actividades del organismo cuando se encuentra en condiciones de estrés y actividad física?']='Sistema simpático';
+                    soluciones['¿Cuáles de estos no es un tipo de fotorreceptores?']='báculos';
+                    soluciones['¿Dónde se encuentran las células mitrales?']='bulbo olfatorio';
+                    soluciones['¿Cuál es la región siguiente a la a la médula espinal?']='bulbo raquídeo';
+                    soluciones['¿Cuál de estos pares craneales lleva información de gusto y sensibilidad general?']='Glosofaringeo (IX)';
+                    soluciones['¿Cuántos ventrículos cerebrales existen?']='Cuatro';
+                    soluciones['¿Qué forma tiene la sustancia gris de la médula espinal?']='H';
+                    soluciones['¿Cómo se llaman los reflejos que aparecen sin mediación del cerebro?']='Reflejo medular';
+                    soluciones['¿Qué lóbulo es el responsable de los procesos de planificación, control y ejecución de las funciones motoras?']='lóbulo frontal';
+                    soluciones['La estructura más importante para el aprendizaje y la memoria es…']='hipocampo';
+                    soluciones['¿Cuál no es una meninge?']='Examadre';
+                    soluciones['¿Entre que dos meninges se encuentra el espacio leptomeníngeo?']='aracnoides y piamadre';
+                    soluciones['Están situados en las raíces posteriores de los nervios raquídeos, contienen los cuerpos de las neuronas sensitivas.']='Ganglios espinales';
+                    soluciones['¿Qué patología genética se relaciona con la presencia de una copia extra del cromosoma 21?']='síndrome de down';
+                    soluciones['¿Qué tipo de células son las encargadas de transformar el sonido en impulso nervioso?']='células ciliadas';
+                    soluciones['¿Qué estructura controla la actividad cardiaca, la respiración, la actividad vasomotora y gastrointestinal?']='Bulbo raquídeo';
+                    soluciones['¿Qué estructura coordina e integra las respuestas que se producen mediante cambios motivacionales y produce expresión facial y corporal?']='hipotálamo';
+                    soluciones['Los coliculos superiores tienen una función visual, son los encargados de orientar la cabeza y los ojos hacia los estímulos, mientras que los colículos inferiores están relacionas con…']='procesamiento auditivo';
+                    soluciones['¿La alteración de que estructura  puede tener como consecuencia temblores?']='Sustancia roja';
+                    
+                    opciones['¿Qué estructura del cerebelo está encargada de la coordinación muscular?']='arquicerebelo,neocerebelo,paleocerebelo';
+                    opciones['La amígdala se encarga, principalmente de…']='Dar significado emocional a los estímulos,integrar información sensorial,procesar información motora';
+                    opciones['La enfermedad asociada a la formación de placas de proteínas tau y beta-amiloide es…']='Parkinson,Alzheimer,Esquizofrenia';
+                    opciones['La enfermedad asociada a la degeneración de las neuronas dopaminérgicas de la sustancia negra y los gangios basales es…']='Parkinson,Alzheimer,Esquizofrenia';
+                    opciones['¿Cuál es la principal función del tálamo?']='Asignación de respuesta a estímulos,Integración visual,Relevo de la información sensorial y motora';
+                    opciones['¿Cómo se denomina a la estructura que sirve de vía comunicante entre hemisferios?']='diencéfalo,cuerpo calloso,columnas interhemisféricas';
+                    opciones['¿Para qué sirve el área de wernicke?']='Comprensión del lenguaje,Procesamiento de la gramática,Producción del habla';
+                    opciones['¿Qué tipo de funciones tiene el subtálamo?']='motoras,sensitivas,emocionales';
+                    opciones['¿Cómo se llama la representación pictórica de las divisiones anatómicas de la corteza motora primaria y la corteza somatoestésica primaria?']='Somatograma,Estesotopia,Homúnculo';
+                    opciones['¿Qué sistema es el encargado de regular las actividades involuntarias del cuerpo?']='Sistema límbico,Sistema nervioso autónomo,Sistema nervioso somático';
+                    opciones['¿Cómo se llama a la acción que realiza el sistema nervioso autónomo  y tiene la función de regular las reacciones conscientes?']='arco reflejo,planificación nerviosa,regulación nerviosa';
+                    opciones['¿Qué sistema se encarga de regular las actividades del organismo cuando se encuentra en condiciones de estrés y actividad física?']='Sistema somatosensoral,Sistema vegetativo,Sistema simpático';
+                    opciones['¿Cuáles de estos no es un tipo de fotorreceptores?']='conos,báculos,bastones';
+                    opciones['¿Dónde se encuentran las células mitrales?']='bulbo olfatorio,hipocampo,diencéfalo';
+                    opciones['¿Cuál es la región siguiente a la a la médula espinal?']='mesencéfalo,bulbo raquídeo,protuberancia';
+                    opciones['¿Cuál de estos pares craneales lleva información de gusto y sensibilidad general?']='Glosofaringeo (IX),Vago (X),Troclear (IV)';
+                    opciones['¿Cuántos ventrículos cerebrales existen?']='Cinco,Siete,Cuatro';
+                    opciones['¿Qué forma tiene la sustancia gris de la médula espinal?']='H,L,T';
+                    opciones['¿Cómo se llaman los reflejos que aparecen sin mediación del cerebro?']='Reflejo automático,Reflejo medular,No existen';
+                    opciones['¿Qué lóbulo es el responsable de los procesos de planificación, control y ejecución de las funciones motoras?']='lóbulo frontal,lóbulo parietal,lóbulo temporal';
+                    opciones['La estructura más importante para el aprendizaje y la memoria es…']='hipotálamo,hipófisis,hipocampo';
+                    opciones['¿Cuál no es una meninge?']='Duramadre,Examadre,Piamadre';
+                    opciones['¿Entre que dos meninges se encuentra el espacio leptomeníngeo?']='piamadre y duramadre,duramadre y aracnoides,aracnoides y piamadre';
+                    opciones['Están situados en las raíces posteriores de los nervios raquídeos, contienen los cuerpos de las neuronas sensitivas.']='Ganglios espinales,Ganglios vegetativos,Ganglios simpáticos';
+                    opciones['¿Qué patología genética se relaciona con la presencia de una copia extra del cromosoma 21?']='síndrome del cromosoma x frágil,síndrome de asperger,síndrome de down';
+                    opciones['¿Qué tipo de células son las encargadas de transformar el sonido en impulso nervioso?']='células ciliadas,células de corti,perilinfo';
+                    opciones['¿Qué estructura controla la actividad cardiaca, la respiración, la actividad vasomotora y gastrointestinal?']='Mesencéfalo,Bulbo raquídeo,Putamen';
+                    opciones['¿Qué estructura coordina e integra las respuestas que se producen mediante cambios motivacionales y produce expresión facial y corporal?']='tálamo,hipotálamo,habénula';			
+                    opciones['Los coliculos superiores tienen una función visual, son los encargados de orientar la cabeza y los ojos hacia los estímulos, mientras que los colículos inferiores están relacionas con…']='procesamiento auditivo,dilatación pupilar,sensibilidad al dolor';
+                    opciones['¿La alteración de que estructura  puede tener como consecuencia temblores?']='Tálamo,Sustancia roja,Lóbulo occipital';			
+                    
+                }else if(index==4 || index==5){
+                    document.getElementById("tituloTema").innerHTML="HISTORIA DE LA NEUROCIENCIA";
+                    
+                    preguntas=new Array('¿En que año recibió Santiago Ramón y Cajal el premio Nobel?','¿Quien fue el principal encargado de desarrollar la "doctrina de la neurona"?','¿Quien postulaba que el centro del intelecto se encontraba en el corazón?','¿Por donde se conecta, según Descartes, el alma con el cuerpo?','"Soy de la opinión que de estas maneras (sabiduría, conocimiento, sentidos...) el cerebro ejerce el mayor poder sobre el hombre.” ¿De quien es esta afirmación?','Franz Joseph Gall es conocido por...','¿Quien propone que la contracción muscular está generada por corrientes eléctricas?','¿Quien publicó el origen de las especies?','¿Quien o quienes obtienen en el año 1981 el premio nobel por la organización de la corteza cerebral?','¿Porque recibieron James Watson y Francis Crick el premio nobel en 1962?','¿Quienes propusieron la teoría química de la transmisión sináptica?','¿Quien desarrolló un método de tinción con cromato de plata, que permite colorear una neurona entre otras?','¿Que hicieron (entre otras cosas) Hodgkin y Huxley?','¿Quien descubre en 1877 la ELA?','¿Que hicieron Knoll y Ruska?','¿En que año se desarrolló la resonancia magnética funcional?','¿Quien es conocido por estudiar los fundamentos neuronales del comportamiento reflejo?','¿Como se llama a esta ley? Dada una neurona de un determinado tipo, no puede ser funcionalmente reemplazada por una de otro tipo, incluso si su conectividad sináptica y el tipo de neurotransmisor son idénticos.','¿Quien estudió la degeneración presenil?','¿Quien escribió en 1664, anatomia cerebral?','Quien investigo las leyes de la herencia?','¿Quien le da nombre a las interrupciones de mielina?','¿Quien es conocido por los estudios sobre afasias?','¿Que descubre V.B. Mountcastle?','¿Porque es conocido G.Ricolazzi?','Alomeón de Crotóna propuso al cerebro como...','¿Quien postuló la doctrina de las energías nerviosas específicas?','¿En que año se crea SENC. Sociedad Española de Nuerocienca?','¿Como se llamaba el capataz de obra que tras atravesarle, una barra de metal, el cerebro, pudo sobrevivir aunque con una vida diferente?');
+                    
+                    soluciones=new Array();
+                    opciones=new Array();
+                    
+                    soluciones['¿En que año recibió Santiago Ramón y Cajal el premio Nobel?']='1906';
+                    soluciones['¿Quien fue el principal encargado de desarrollar la "doctrina de la neurona?']='Ramón y Cajal';
+                    soluciones['¿Quien postulaba que el centro del intelecto se encontraba en el corazón?']='Aristóteles';
+                    soluciones['¿Por donde se conecta, según Descartes, el alma con el cuerpo?']='Glándula pineal';
+                    soluciones['"Soy de la opinión que de estas maneras (sabiduría, conocimiento, sentidos...) el cerebro ejerce el mayor poder sobre el hombre.” ¿De quien es esta afirmación?']='Hipócrates';
+                    soluciones['Franz Joseph Gall es conocido por...']='Frenología';
+                    soluciones['¿Quien propone que la contracción muscular está generada por corrientes eléctricas?']='Galvani';
+                    soluciones['¿Quien publicó el origen de las especies?']='Darwin';
+                    soluciones['¿Quien o quienes obtienen en el año 1981 el premio nobel por la organización de la corteza cerebral?']='Hubel y wiesel';
+                    soluciones['¿Porque recibieron James Watson y Francis Crick el premio nobel en 1962?']='Descubrir la estructura del ADN';
+                    soluciones['¿Quienes propusieron la teoría química de la transmisión sináptica?']='Dale y Loewi';
+                    soluciones['¿Quien desarrolló un método de tinción con cromato de plata, que permite colorear una neurona entre otras?']='Golgi';
+                    soluciones['¿Que hicieron (entre otras cosas) Hodgkin y Huxley?']='Formulan matemáticamente las reacciones del potencial de acción';
+                    soluciones['¿Quien descubre en 1877 la ELA?']='Charcot';
+                    soluciones['¿Que hicieron Knoll y Ruska?']='inventaron el microscopio electrónico';
+                    soluciones['¿En que año se desarrolló la resonancia magnética funcional?']='1990';
+                    soluciones['¿Quien es conocido por estudiar los fundamentos neuronales del comportamiento reflejo?']='Sherrington';
+                    soluciones['¿Como se llama a esta ley? Dada una neurona de un determinado tipo, no puede ser funcionalmente reemplazada por una de otro tipo, incluso si su conectividad sináptica y el tipo de neurotransmisor son idénticos.']='Ley de Llinás';
+                    soluciones['¿Quien estudió la degeneración presenil?']='Alzheimer';
+                    soluciones['¿Quien escribió en 1664, anatomia cerebral?']='Willis';
+                    soluciones['Quien investigo las leyes de la herencia?']='Mendel';
+                    soluciones['¿Quien le da nombre a las interrupciones de mielina?']='Ranvier';
+                    soluciones['¿Quien es conocido por los estudios sobre afasias?']='Wernicke';
+                    soluciones['¿Que descubre V.B. Mountcastle?']='Columnas corticales';
+                    soluciones['¿Porque es conocido G.Ricolazzi?']='neuronas espejo';
+                    soluciones['Alomeón de Crotóna propuso al cerebro como...']='centro del pensamiento';
+                    soluciones['¿Quien postuló la doctrina de las energías nerviosas específicas?']='Muller';
+                    soluciones['¿En que año se crea SENC. Sociedad Española de Nuerocienca?']='1985';
+                    soluciones['¿Como se llamaba el capataz de obra que tras atravesarle, una barra de metal, el cerebro, pudo sobrevivir aunque con una vida diferente?']='P.Gage';
+                    
+                    opciones['¿En que año recibió Santiago Ramón y Cajal el premio Nobel?']='1910,1903,1906';
+                    opciones['¿Quien fue el principal encargado de desarrollar la "doctrina de la neurona?']='Camilo Golgi,Ramón y Cajal,Watson y crick';
+                    opciones['¿Quien postulaba que el centro del intelecto se encontraba en el corazón?']='Galeno,Hipócrates,Aristóteles';
+                    opciones['¿Por donde se conecta, según Descartes, el alma con el cuerpo?']='Glándula pineal,primer ventrículo,hipocampo';
+                    opciones['"Soy de la opinión que de estas maneras (sabiduría, conocimiento, sentidos...) el cerebro ejerce el mayor poder sobre el hombre.” ¿De quien es esta afirmación?']='Galeno,Hipócrates,Aristóteles';
+                    opciones['Franz Joseph Gall es conocido por...']='renología,teoría reticular del sistema nervioso,descubrió la enfermedad del alzheimer ';
+                    opciones['¿Quien propone que la contracción muscular está generada por corrientes eléctricas?']='Mesmer,Golgi,Galvani';
+                    opciones['¿Quien publicó el origen de las especies?']='Galton,charcot,Darwin';
+                    opciones['¿Quien o quienes obtienen en el año 1981 el premio nobel por la organización de la corteza cerebral?']='Hubel y wiesel, Luria,Neher y Sakman';
+                    opciones['¿Porque recibieron James Watson y Francis Crick el premio nobel en 1962?']='Descubrir la estructura del ADN,estudios sobre etología,estudio neurotransmisores';
+                    opciones['¿Quienes propusieron la teoría química de la transmisión sináptica?']='Dale y Loewi,Furshpan y Potter,Bernstein';
+                    opciones['¿Quien desarrolló un método de tinción con cromato de plata, que permite colorear una neurona entre otras?']='Golgi,Darwin,Huxley';
+                    opciones['¿Que hicieron (entre otras cosas) Hodgkin y Huxley?']='Formulan matemáticamente las reacciones del potencial de acción,Logran descubrir como se consolida la memoria,formula la LTP';
+                    opciones['¿Quien descubre en 1877 la ELA?']='Charcot,Ranvier,Schwann';
+                    opciones['¿Que hicieron Knoll y Ruska?']='Descubrieron la sinaptogénesis,inventaron el microscopio electrónico,estudios sobre el dolor.';
+                    opciones['¿En que año se desarrolló la resonancia magnética funcional?']='1980,1990,1985';
+                    opciones['¿Quien es conocido por estudiar los fundamentos neuronales del comportamiento reflejo?']='Helmholtz,Sherrington,huntington';
+                    opciones['¿Como se llama a esta ley? Dada una neurona de un determinado tipo, no puede ser funcionalmente reemplazada por una de otro tipo, incluso si su conectividad sináptica y el tipo de neurotransmisor son idénticos.']='Ley de Llinás,Ley de Cajal,Ley del irremplazable';
+                    opciones['¿Quien estudió la degeneración presenil?']='Parkinson,Alzheimer,Willis';
+                    opciones['¿Quien escribió en 1664, anatomia cerebral?']='Descartes,hooke,Willis';
+                    opciones['Quien investigo las leyes de la herencia?']='Kircher,Mendel,Brodman';
+                    opciones['¿Quien le da nombre a las interrupciones de mielina?']='Flourens,Mielin,Ranvier';
+                    opciones['¿Quien es conocido por los estudios sobre afasias?']='Wernicke,Eccles,Chomsky';
+                    opciones['¿Que descubre V.B. Mountcastle?']='Columnas corticales,separación de dendrita y axón,manipulación genética';
+                    opciones['¿Porque es conocido G.Ricolazzi?']='Células madre,reparación neuronal,neuronas espejo';
+                    opciones['Alomeón de Crotóna propuso al cerebro como...']='centro del pensamiento,receptor de sensaciones,centro del movimiento';
+                    opciones['¿Quien postuló la doctrina de las energías nerviosas específicas?']='Muller,Golgi,Carlson';
+                    opciones['¿En que año se crea SENC. Sociedad Española de Nuerocienca?']='1979,1985,1990';
+                    opciones['¿Como se llamaba el capataz de obra que tras atravesarle, una barra de metal, el cerebro, pudo sobrevivir aunque con una vida diferente?']='T.Rasmussen,P.Gage,E.Adrian';
+                    
+                }else if(index==6 || index==7){
+                    document.getElementById("tituloTema").innerHTML="NEUROENDOCRINOLOGÍA";
+                    
+                    preguntas=new Array('¿Que hormona regula comportamientos sociales, patrones sexuales y la conducta parental?','¿Cual de estas hormonas no estimulan el metabolismo; esencial para el crecimiento y desarrollo normal?','¿Cual de estas hormonas no están relacionadas con el estrés?','Una carencia  de serotonina puede provocar...','Ayuda al organismo a afrontar el estrés; incrementa la frecuencia cardíaca, la presión arterial, la tasa metabólica; desvía el riego sanguíneno.','¿Que hormona esta viculada al desarrollo y mantenimiento de caracteres sexuales femeninos?','El mantenimiento de la temperatura corporal depende del balance entre la producción y pérdida de calor, ¿este balance es regulado por que estructura cerebral?','¿Que hormona  esta relacionada con el ciclo vigilia-sueño?','¿Cual de estas hormonas estimula el apetito?','¿Cual es el neurotransmisor que se conoce como la hormona del placer?','¿Que hormona regula la respuesta al dolor?','¿Que hormona inhibe la respuesta inmunológica?','La somatotropina es tambien conocida como la hormona...','¿Cual de estas hormonas no se liberan en la gandula pineal?','¿Cual es la hormona que esta relacionada con la maduración de los órganos masculinos?','¿Que hormona se libera en la médula espinal?','¿Cual de estos no es una glándula endocrina?','¿Como se denomina al tipo de hormonas que en conjunto tienen un efecto más potente que cuando se encuentran separadas?','¿Como se denominan a las hormonas que se unen a un receptor dentro de la célula y viaja hacia algún gen del ADN que estimula su transcripción?','¿Como se llama a las hormonas que disminuyen la actividad en un tejido?','¿Donde se libera la dopamina?','Solo es considerado neurotransmisor, pero no hormona.','¿Que hormona hace disminuir el apetito?','¿la liberación de que tipo de hormonas provoca un aumento notable de estrés?','la adenohipófisis tambien es conocida como?','Estas hormonas se segregan después de llevar 3 horas de vigilia y en actividad.','¿Que clase de neuronas tienen un efecto analgésico?','Una cantidad elevada de estas hormonas puede provocar ansiedad','¿Que hormona esta relacionada con el miedo?','la médula adrenal y el sistema nervioso simpático forman un sistema, ¿como se llama?');
+                    soluciones=new Array();
+                    opciones=new Array();
+                    
+                    soluciones['¿Que hormona regula comportamientos sociales, patrones sexuales y la conducta parental?']='Oxitocina';
+                    soluciones['¿Cual de estas hormonas no estimulan el metabolismo; esencial para el crecimiento y desarrollo normal?']='adrenalina';
+                    soluciones['¿Cual de estas hormonas no están relacionadas con el estrés?']='Prolactina';
+                    soluciones['Una carencia  de serotonina puede provocar...']='depresión';
+                    soluciones['Ayuda al organismo a afrontar el estrés; incrementa la frecuencia cardíaca, la presión arterial, la tasa metabólica; desvía el riego sanguíneno.']='Adrenalina';
+                    soluciones['¿Que hormona esta viculada al desarrollo y mantenimiento de caracteres sexuales femeninos?']='estradiol';
+                    soluciones['El mantenimiento de la temperatura corporal depende del balance entre la producción y pérdida de calor, ¿este balance es regulado por que estructura cerebral?']='hipotálamo';
+                    soluciones['¿Que hormona  esta relacionada con el ciclo vigilia-sueño?']='melatonina';
+                    soluciones['¿Cual de estas hormonas estimula el apetito?']='Ghrelina';
+                    soluciones['¿Cual es el neurotransmisor que se conoce como la hormona del placer?']='Dopamina';
+                    soluciones['¿Que hormona regula la respuesta al dolor?']='encefalina';
+                    soluciones['¿Que hormona inhibe la respuesta inmunológica?']='Cortisol';
+                    soluciones['La somatotropina es tambien conocida como la hormona...']='Del crecimiento';
+                    soluciones['¿Cual de estas hormonas no se liberan en la gandula pineal?']='Somatostatina';
+                    soluciones['¿Cual es la hormona que esta relacionada con la maduración de los órganos masculinos?']='andrógenos';
+                    soluciones['¿Que hormona se libera en la médula espinal?']='trombopoyética';
+                    soluciones['¿Cual de estos no es una glándula endocrina?']='bazo';
+                    soluciones['¿Como se denomina al tipo de hormonas que en conjunto tienen un efecto más potente que cuando se encuentran separadas?']='agonista';
+                    soluciones['¿Como se denominan a las hormonas que se unen a un receptor dentro de la célula y viaja hacia algún gen del ADN que estimula su transcripción?']='Esteroideas';
+                    soluciones['¿Como se llama a las hormonas que disminuyen la actividad en un tejido?']='inhibidoras';
+                    soluciones['¿Donde se libera la dopamina?']='hipotálamo';
+                    soluciones['Solo es considerado neurotransmisor, pero no hormona.']='noradrenalina';
+                    soluciones['¿Que hormona hace disminuir el apetito?']='Leptina';
+                    soluciones['¿la liberación de que tipo de hormonas provoca un aumento notable de estrés?']='glucocorticoides';
+                    soluciones['la adenohipófisis tambien es conocida como?']='hipófisis anterior';
+                    soluciones['Estas hormonas se segregan después de llevar 3 horas de vigilia y en actividad.']='catecolaminas';
+                    soluciones['¿Que clase de neuronas tienen un efecto analgésico?']='endorfinas';
+                    soluciones['Una cantidad elevada de estas hormonas puede provocar ansiedad']='tiroideas';
+                    soluciones['¿Que hormona esta relacionada con el miedo?']='oxitocina';
+                    soluciones['la médula adrenal y el sistema nervioso simpático forman un sistema, ¿como se llama?']='sistema simpaticoadrenal';
+                    
+                    opciones['¿Que hormona regula comportamientos sociales, patrones sexuales y la conducta parental?']='Oxitocina,vasopresina,tiroxina';
+                    opciones['¿Cual de estas hormonas no estimulan el metabolismo; esencial para el crecimiento y desarrollo normal?']='adrenalina,tiroxina,triyodotironina';
+                    opciones['¿Cual de estas hormonas no están relacionadas con el estrés?']='ACTH,Cortisol,Prolactina';
+                    opciones['Una carencia  de serotonina puede provocar...']='estrés,depresión,falta de sueño.';
+                    opciones['Ayuda al organismo a afrontar el estrés; incrementa la frecuencia cardíaca, la presión arterial, la tasa metabólica; desvía el riego sanguíneno.']='Melanina,lipoproteina LDL,Adrenalina';
+                    opciones['¿Que hormona esta viculada al desarrollo y mantenimiento de caracteres sexuales femeninos?']='estradiol,insulina,testosterona.';
+                    opciones['El mantenimiento de la temperatura corporal depende del balance entre la producción y pérdida de calor, ¿este balance es regulado por que estructura cerebral?']='Tálamo,hipotálamo,hipocampo';
+                    opciones['¿Que hormona  esta relacionada con el ciclo vigilia-sueño?']='hormona tiroidea,melatonina,globulina';
+                    opciones['¿Cual de estas hormonas estimula el apetito?']='Histamina,Ghrelina,Relaxina';
+                    opciones['¿Cual es el neurotransmisor que se conoce como la hormona del placer?']='Dopamina,corticoides,vasopresina';
+                    opciones['¿Que hormona regula la respuesta al dolor?']='insulina,inhibina,encefalina';
+                    opciones['¿Que hormona inhibe la respuesta inmunológica?']='Cortisol,Calcitriol,estradiol';
+                    opciones['La somatotropina es tambien conocida como la hormona...']='De la memoria,Masculina,Del crecimiento';
+                    opciones['¿Cual de estas hormonas no se liberan en la gandula pineal?']='Melatonina,Somatostatina,Dimetiltriptatina';
+                    opciones['¿Cual es la hormona que esta relacionada con la maduración de los órganos masculinos?']='Progesterona,andrógenos,estrógenos';
+                    opciones['¿Que hormona se libera en la médula espinal?']='trombopoyética,leptina,calcifediol';
+                    opciones['¿Cual de estos no es una glándula endocrina?']='Hipófisis,tiroides,bazo';
+                    opciones['¿Como se denomina al tipo de hormonas que en conjunto tienen un efecto más potente que cuando se encuentran separadas?']='antagonista,estimulante,agonista';
+                    opciones['¿Como se denominan a las hormonas que se unen a un receptor dentro de la célula y viaja hacia algún gen del ADN que estimula su transcripción?']='Esteroideas,trópicas,mutágenas';
+                    opciones['¿Como se llama a las hormonas que disminuyen la actividad en un tejido?']='trópicas,inhibidoras,antagonistas';
+                    opciones['¿Donde se libera la dopamina?']='Tiroides,hipotálamo,glándula pituitaria';
+                    opciones['Solo es considerado neurotransmisor, pero no hormona.']='dopamina,noradrenalina,arginina';
+                    opciones['¿Que hormona hace disminuir el apetito?']='Leptina,orexina,aldosterona';
+                    opciones['¿la liberación de que tipo de hormonas provoca un aumento notable de estrés?']='glucocorticoides,peptídicas,amínicas';
+                    opciones['la adenohipófisis tambien es conocida como?']='hipófisis media,hipófisis superior,hipófisis anterior';
+                    opciones['Estas hormonas se segregan después de llevar 3 horas de vigilia y en actividad.']='tiroideas,catecolaminas,endorfinas';
+                    opciones['¿Que clase de neuronas tienen un efecto analgésico?']='testosteronas,cortisol,endorfinas';
+                    opciones['Una cantidad elevada de estas hormonas puede provocar ansiedad']='oxitocina,testosterona,tiroideas';
+                    opciones['¿Que hormona esta relacionada con el miedo?']='oxitocina,somatotrofina,adrenalina';
+                    opciones['la médula adrenal y el sistema nervioso simpático forman un sistema, ¿como se llama?']='sistema simpaticoadrenal,sistema adrenosimpatico,sistema hormonal tipo II';
+                    
+                }
+                        
+                document.getElementById('btn2').style.display='block';		
+            }
+            
+            function elimRes(){//elimina resul para que no se aglomeren los resultados
 				
-		document.getElementById('btn2').style.display='block';		
-	}
-	
-	function elimRes(){//elimina resul para que no se aglomeren los resultados		
-		document.body.removeChild(document.getElementById("resul"));		
-		}
-	
-	
-	function ok(e){//dice el resultado de la pregunta y elimina o añade los cerebros de tema
-				
-		if(e.name==soluciones[""+$("#preg").html()]){
-			
-			document.body.removeChild(document.getElementById("quiz"));
-			$('#resul').append('<h1 data-role="header">CORRECTO</h1>');
-			$('#resul').append('<a href="#juego" onClick="elimRes()" data-role="button">CONTINUAR</h1>');
-			
-			if(document.getElementById("imgCere").getAttribute("src")=="img/0-g.png"){//estos if te dan el cerebro del tema correspondiente si lo aciertas
-				$('#i0').attr("src", "img/0-g.png");
-			}
-			if(document.getElementById("imgCere").getAttribute("src")=="img/1-g.png"){
-				$('#i1').attr("src", "img/1-g.png");
-			}
-			if(document.getElementById("imgCere").getAttribute("src")=="img/2-g.png"){
-				$('#i2').attr("src", "img/2-g.png");
-			}
-			if(document.getElementById("imgCere").getAttribute("src")=="img/3-g.png"){
-				$('#i3').attr("src", "img/3-g.png");
-			}
+                document.body.removeChild(document.getElementById("resul"));
+						
+                }            
+            
+            function ok(e){//dice el resultado de la pregunta y elimina o añade los cerebros de tema			
+                        
+                if(e.name==soluciones[""+$("#preg").html()]){
+                    
+                    document.body.removeChild(document.getElementById("quiz"));
 					
-		}else{
-			
-			document.body.removeChild(document.getElementById("quiz"));
-			$('#resul').append('<h1 data-role="header">FALSO</h1>');
-			$('#resul').append('<a href="#juego" onClick="elimRes()" data-role="button">CONTINUAR</h1>');
-			
-			if(document.getElementById("imgCere").getAttribute("src")=="img/0-g.png"){//estos if te quitan el cerebro del tema correspondiente si lo has conseguido, caes de nuevo y fallas
-				$('#i0').attr("src", "img/cn.png");
-			}
-			if(document.getElementById("imgCere").getAttribute("src")=="img/1-g.png"){
-				$('#i1').attr("src", "img/cn.png");
-			}
-			if(document.getElementById("imgCere").getAttribute("src")=="img/2-g.png"){
-				$('#i2').attr("src", "img/cn.png");
-			}
-			if(document.getElementById("imgCere").getAttribute("src")=="img/3-g.png"){
-				$('#i3').attr("src", "img/cn.png");
-			}			
-		}
-	}
-	
-	function add(){//este metodo añade una pregunta aleatoria
-		
-		i=Math.floor(Math.random()*preguntas.length);
-					
-		$('#quiz').append('<h1 id="preg" data-role="header">'+preguntas[i]+'</h1>');		
-		$('#quiz').append('<a onClick="ok(this)" href="#resul" id="1" data-role="button">'+opciones[""+preguntas[i]].split(",")[0]+'</a>');
-		$('#1').attr("name",""+opciones[""+preguntas[i]].split(",")[0]);		
-		$('#quiz').append('<a onClick="ok(this)" href="#resul" id="2" data-role="button">'+opciones[""+preguntas[i]].split(",")[1]+'</a>');
-		$('#2').attr("name",""+opciones[""+preguntas[i]].split(",")[1]);
-		$('#quiz').append('<a onClick="ok(this)" href="#resul" id="3" data-role="button">'+opciones[""+preguntas[i]].split(",")[2]+'</a>');
-		$('#3').attr("name",""+opciones[""+preguntas[i]].split(",")[2]);
-		
-		preguntas.splice(i,1);//primer numero indica a partir de que indice queremos borrar y el segundo cuantos indices queremos borrar
-		
-	}
-	
-	function cerrar_ventana(){
-		navigator.app.exitApp();
-	}
-	
-</script>
-
-<div data-role="page" id="juego">
-
-<a href="index.html" target="_parent"><div data-role="header" onClick="cerrar();" id="titulo"><img src="img/logo.jpg"/></div></a>
-
-
-<div data-role="content" id="contImg" onClick="parar()"><img src="" id="imagen"></div>
-<a id="btn2" data-role="button" href="#tema">EMPEZAR</a>
-
-</div>
-
-<div data-role="page" id="tema">
-
-    <h1 id="tituloTema" data-role="header"></h1>
+                    $('#resul').append('<h2 data-role="header">CORRECTO</h2>');
+                    $('#resul').append('<a href="#juego" id="btnElimRes" onClick="elimRes()" data-role="button" data-transition="flip">CONTINUAR</a>');
+                    
+                    if(document.getElementById("imgCere").getAttribute("src")=="img/0-g.png"){//estos if te dan el cerebro del tema correspondiente si lo aciertas
+                        $('#im0').attr("src", "img/0-g.png");
+                    }
+                    if(document.getElementById("imgCere").getAttribute("src")=="img/1-g.png"){
+                        $('#im1').attr("src", "img/1-g.png");
+                    }
+                    if(document.getElementById("imgCere").getAttribute("src")=="img/2-g.png"){
+                        $('#im2').attr("src", "img/2-g.png");
+                    }
+                    if(document.getElementById("imgCere").getAttribute("src")=="img/3-g.png"){
+                        $('#im3').attr("src", "img/3-g.png");
+                    }
+                    
+                    if(document.getElementById("im0").getAttribute("src")=="img/0-g.png" && document.getElementById("im1").getAttribute("src")=="img/1-g.png" 
+                    && document.getElementById("im2").getAttribute("src")=="img/2-g.png" && document.getElementById("im3").getAttribute("src")=="img/3-g.png"){
+                        
+                        if(confirm("enhorabuena, has ganado los 4 cerebros!!, ¿quieres jugar otra vez?")){
+                            $('#im0').attr("src", "img/cn.png");
+                            $('#im1').attr("src", "img/cn.png");
+                            $('#im2').attr("src", "img/cn.png");
+                            $('#im3').attr("src", "img/cn.png");
+                        }else{
+                            document.location=('./index.html');
+                            }
+                        
+                        }
+                            
+                }else{
+                    
+                    document.body.removeChild(document.getElementById("quiz"));
+                    $('#resul').append('<h2 data-role="header">FALSO</h2>');
+                    $('#resul').append('<a href="#juego" id="btnElimRes" onClick="elimRes()" data-role="button" data-transition="flip">CONTINUAR</a>');
+                    
+                    if(document.getElementById("imgCere").getAttribute("src")=="img/0-g.png"){//estos if te quitan el cerebro del tema correspondiente si lo has conseguido, caes de nuevo y fallas
+                        $('#im0').attr("src", "img/cn.png");
+                    }
+                    if(document.getElementById("imgCere").getAttribute("src")=="img/1-g.png"){
+                        $('#im1').attr("src", "img/cn.png");
+                    }
+                    if(document.getElementById("imgCere").getAttribute("src")=="img/2-g.png"){
+                        $('#im2').attr("src", "img/cn.png");
+                    }
+                    if(document.getElementById("imgCere").getAttribute("src")=="img/3-g.png"){
+                        $('#im3').attr("src", "img/cn.png");
+                    }			
+                }
+            }
+            
+            function add(){//este metodo añade una pregunta aleatoria			
+                
+                i=Math.floor(Math.random()*preguntas.length);
+                            
+                $('#quiz').append('<h2 id="preg" data-role="header">'+preguntas[i]+'</h2>');		
+                $('#quiz').append('<a onClick="ok(this)" href="#resul" id="1" data-role="button" data-transition="flip">'+opciones[""+preguntas[i]].split(",")[0]+'</a>');
+                $('#1').attr("name",""+opciones[""+preguntas[i]].split(",")[0]);		
+                $('#quiz').append('<a onClick="ok(this)" href="#resul" id="2" data-role="button" data-transition="flip">'+opciones[""+preguntas[i]].split(",")[1]+'</a>');
+                $('#2').attr("name",""+opciones[""+preguntas[i]].split(",")[1]);
+                $('#quiz').append('<a onClick="ok(this)" href="#resul" id="3" data-role="button" data-transition="flip">'+opciones[""+preguntas[i]].split(",")[2]+'</a>');
+                $('#3').attr("name",""+opciones[""+preguntas[i]].split(",")[2]);
+                
+                preguntas.splice(i,1);//primer numero indica a partir de que indice queremos borrar y el segundo cuantos indices queremos borrar
+                
+            }
+            
+        </script>
+        
+        <div data-role="page" id="juego">
+        
+            <div data-role="button" onClick="navigator.app.exitApp()" id="back">volver</div>
+            
+            <a href="index.html" target="_parent"><div data-role="header" onClick="cerrar();" id="titulo"><img src="img/logo.jpg"/></div></a>
+            
+            <div data-role="content" id="contImg" onClick="parar()"><img src="" id="imagen"></div>
+            <a id="btn2" data-role="button" data-transition="flip" onClick="" href="#tema">EMPEZAR</a>
+        
+        </div>
+        
+        <div data-role="page" id="tema">
+        
+            <h2 id="tituloTema" data-role="header"></h2>
+            
+            <div id="cerebrosDone">    	
+                <img id="gafas" src="img/gafas.png"/><img id="im0" src="img/cn.png"/><img id="im1" src="img/cn.png"/><img id="im2" src="img/cn.png"/><img id="im3" src="img/cn.png"/>
+            </div>
+            
+            <div id="cerebroTema">
+                <img id="imgCere"/>
+            </div>
+            
+            <a id="btn3" data-role="button" data-transition="flip" href="#quiz" onClick="add()">EMPEZAR</a>
+            
+        </div>
     
-    <div data-role="fieldcontain" id="cerebrosDone">
-    	<img id="gafas" src="img/gafas.png"/><img id="i0" src="img/cn.png"/><img id="i1" src="img/cn.png"/><img id="i2" src="img/cn.png"/><img id="i3" src="img/cn.png"/>
-    </div>
-    
-    <div data-role="fieldcontain" id="cerebroTema">
-    	<img id="imgCere"/>
-    </div>
-    
-    <a id="btn3" data-role="button" href="#quiz" onClick="add()">EMPEZAR</a>
-    
-</div>
-
-</body>
+    </body>
 </html>

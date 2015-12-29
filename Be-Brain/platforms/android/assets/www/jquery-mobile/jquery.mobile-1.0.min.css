@@ -18,7 +18,7 @@
 	box-shadow: -1px 25px 47px 3px rgba(0,0,0,0.75);
 }
 #cerebrosDone{
-	margin-top:10%;
+	margin-top:15%;
 	margin-left:10%;
 	width:80%;
 }
@@ -29,11 +29,11 @@
     width:20%;
     height:auto;
 }
-#cerebro{
-	margin-top:35%;
-	margin-left:25%;
-	width:70%;
-}
+
+h2{	
+	text-align:center;
+	}
+
 #cerebro img{
 	border:none;
     padding:0;
@@ -41,22 +41,31 @@
     width:100%;
     height:auto;
 }
-#btn, #btn2, #btn3{
+#btn, #btn2, #btn3, #abajo{
 	position:fixed;
 	bottom:0;
 	width:100%;
+}
+
+#abajo{
+margin-left:26%;
 }
 
 #btn2{
 	display:none;
 	}
 	
-#contImg, #cerebroTema{
-	margin-top:10%;
+#contImg{
+	margin-top:23%;
 	margin-left:5%;
 	width:80%;
 }
-#contImg img, #cerebroTema img{
+#cerebroTema, #tdGal{
+	margin-top:10%;
+	margin-left:10%;
+	width:80%;
+}
+#contImg img, #cerebroTema img, #tdGal img{
 	border:none;
     padding:0;
     margin:0;
@@ -66,20 +75,22 @@
 
 /*parte app*/
 
-body{
-background-color:#999
-}
-
-#abajo{
+#atras{
+	display:none;
 	position:fixed;
 	bottom:0;
-	width:100%;
-}
+	width:99%;
+	}
+
+body{
+background-color:#999
+	}
 
 .botonRS{
-	width:8%;
-	height:6.5%;
-}
+	width:15%;
+	height:15%;
+	}
+	
 .boton{
 	border:none;
     padding:0;
@@ -89,87 +100,73 @@ background-color:#999
 	-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 	-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 	box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-}
+	}
+	
 #botonMenu{
 	width:6%;
 	height:6%;
-}
+	}
+
+#back{
+	height:10%;
+	width:10%;
+	}
 
 .seccion{	
-	width:80%;
-	height:80%;
-}
-.seccion2{	
 	width:100%;
 	height:100%;
-}
+	}
+	
+.seccion2{	
+	width:100%;
+	height:70%;
+	}
 
-table{
-	margin-top:25%;
-	text-align:center;
-}
-
-#capaMenu{
-	display:none;
-	float:none;
+#tab{
 	margin-top:10%;
-	margin-left:10%;
-	width:80%;
-	height:80%;
-}
+	text-align:center;
+	margin-bottom:10%;
+	}
 
 #tablaMenu{
 	border:none;
     padding:0;
     margin:0;
-    width:100%;
-    height:100%;
-}
-
-
-#capaMenu{	
-	height:auto;
-	width:80%;
-	margin-left:10%;
-	background-color: rgba(0,0,0,0);
-}
-
+	margin-top:7%;
+	margin-left:8%;
+    width:80%;
+    height:60%;
+	margin-bottom:20%;
+	}
+	
 #multimedia, #recursos, #enfermedades, #neurociencia, #anatomia{
+	margin-top:7%;
+	margin-left:8%;
+	margin-right:8%;
+    width:75%;
+    height:60%;
+	margin-bottom:20%;
+	}
+
+#ramas, #objetivos, #tecnicas, #conferencias, #documentales, #entrevistas, #galeria, #libros, #revistas, #manuales, #instituciones, #pags, #centros, #incyl, #cajal, #institut, #neuropa, #fede, #bcbl, #alicante, #cimcyc, #alzheimer, #parkinson, #autismo, #esquizofrenia, #tecNeuro, #tecMani, #snc, #encefalo, #telencefalo, #supCraneal, #lobulos, #capCorticales, #comisuras, #ganglios, #amigdala, #hipocampo, #diencefalo, #tronco, #cerebelo, #medula, #snp, #cels, #supCerebral, #talamo, #epitalamo, #hipotalamo, #subtalamo{
+	margin-left:5%;
+	margin-right:5%;
+    width:80%;
+    height:80%;
+	margin-bottom:10%;
+	}
+	
+#ulInteres, #ulRevision, #ulAtlas, #ulOtros{
+	margin-left:7%;
+	margin-right:5%;
+	margin-top:5%;
+	margin-bottom:5%;
+	}
+	
+p, div{
+	text-align:left;
+	}
+
+#multimedia, #recursos, #enfermedades, #neurociencia, #anatomia, #contacto, #ramas, #objetivos, #tecnicas, #back, #conferencias, #documentales, #entrevistas, #galeria, #libros, #l1, #l2, #l3, #l4, #revistas, #r1, #r2, #r3, #r4, #r5, #r6, #r7, #r8, #r9, #r10, #r11, #r12, #r13, #r14, #manuales, #m1, #m2, #m3, #m4, #m5, #m6, #instituciones, #i1, #i2, #i3, #i4, #i5, #i6, #i7, #pags, #ulInteres, #ulRevision, #ulAtlas, #ulOtros, #centros, #incyl, #cajal, #institut, #neuropa, #fede, #bcbl, #alicante, #cimcyc, #alzheimer, #parkinson, #autismo, #esquizofrenia, #tecNeuro, #tecMani, #fmri, #pet, #spect, #eeg, #meg, #neumicro, #masTec, #snc, #encefalo, #telencefalo, #supCraneal, #lobulos, #capCorticales, #comisuras, #ganglios, #amigdala, #hipocampo, #diencefalo, #tronco, #cerebelo, #medula, #snp, #cels, #front, #pari, #temp, #occi, #cuca, #coan, #cotri, #neoes, #glopal, #caud, #mes, #pro, #bul, #ncra, #de, #nerv, #sns, #sna, #gangli, #des, #neuron, #neutrans, #celgli, #supCerebral, #talamo, #epitalamo, #hipotalamo, #subtalamo, #oAna, #oFun{
 	display:none;
-}
-
-#cab, #list{
-	font-size:16px;
-	font-weight:bold;
-	margin:0px;
-	padding:15px;
-	margin-left:50px;
-	margin-right:50px;
-	border-radius:10px;
-}
-
-#cab{
-	color:#FFF;
-	border: 1px solid #000;
-	background: rgba(76,76,76,1);
-background: -moz-linear-gradient(top, rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(44,44,44,1) 50%, rgba(0,0,0,1) 51%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%);
-background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(76,76,76,1)), color-stop(12%, rgba(89,89,89,1)), color-stop(25%, rgba(102,102,102,1)), color-stop(39%, rgba(71,71,71,1)), color-stop(50%, rgba(44,44,44,1)), color-stop(51%, rgba(0,0,0,1)), color-stop(60%, rgba(17,17,17,1)), color-stop(76%, rgba(43,43,43,1)), color-stop(91%, rgba(28,28,28,1)), color-stop(100%, rgba(19,19,19,1)));
-background: -webkit-linear-gradient(top, rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(44,44,44,1) 50%, rgba(0,0,0,1) 51%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%);
-background: -o-linear-gradient(top, rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(44,44,44,1) 50%, rgba(0,0,0,1) 51%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%);
-background: -ms-linear-gradient(top, rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(44,44,44,1) 50%, rgba(0,0,0,1) 51%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%);
-background: linear-gradient(to bottom, rgba(76,76,76,1) 0%, rgba(89,89,89,1) 12%, rgba(102,102,102,1) 25%, rgba(71,71,71,1) 39%, rgba(44,44,44,1) 50%, rgba(0,0,0,1) 51%, rgba(17,17,17,1) 60%, rgba(43,43,43,1) 76%, rgba(28,28,28,1) 91%, rgba(19,19,19,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313', GradientType=0 );
-}
-#list{
-	
-	border: 1px solid #000;
-	background: rgba(242,246,248,1);
-background: -moz-linear-gradient(top, rgba(242,246,248,1) 0%, rgba(216,225,231,1) 50%, rgba(181,198,208,1) 51%, rgba(224,239,249,1) 100%);
-background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(242,246,248,1)), color-stop(50%, rgba(216,225,231,1)), color-stop(51%, rgba(181,198,208,1)), color-stop(100%, rgba(224,239,249,1)));
-background: -webkit-linear-gradient(top, rgba(242,246,248,1) 0%, rgba(216,225,231,1) 50%, rgba(181,198,208,1) 51%, rgba(224,239,249,1) 100%);
-background: -o-linear-gradient(top, rgba(242,246,248,1) 0%, rgba(216,225,231,1) 50%, rgba(181,198,208,1) 51%, rgba(224,239,249,1) 100%);
-background: -ms-linear-gradient(top, rgba(242,246,248,1) 0%, rgba(216,225,231,1) 50%, rgba(181,198,208,1) 51%, rgba(224,239,249,1) 100%);
-background: linear-gradient(to bottom, rgba(242,246,248,1) 0%, rgba(216,225,231,1) 50%, rgba(181,198,208,1) 51%, rgba(224,239,249,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', endColorstr='#e0eff9', GradientType=0 );
-	
-}
+	}

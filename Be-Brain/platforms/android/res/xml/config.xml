@@ -24,4 +24,7 @@
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
     </feature>
+    <feature name="Home">
+        <param name="android-package" value="org.apache.cordova.home.Home" />
+    </feature>
 </widget>

@@ -15,6 +15,10 @@
                         {
                             "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Home\"><param name=\"android-package\" value=\"org.apache.cordova.home.Home\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -26,6 +30,9 @@
             "PACKAGE_NAME": "com.dhs.bebrain"
         },
         "org.apache.cordova.inappbrowser": {
+            "PACKAGE_NAME": "com.dhs.bebrain"
+        },
+        "org.apache.cordova.home": {
             "PACKAGE_NAME": "com.dhs.bebrain"
         }
     },
